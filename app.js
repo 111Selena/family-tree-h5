@@ -625,16 +625,10 @@
     try {
       const dataUrl = await composeFinalImage();
       // 微信内置浏览器不支持 a[download]，改成"长按图片保存到相册"：
-      // 先把 dataURL 转成 blob URL（微信长按保存对 blob 更稳），失败则退回 dataURL
-      let src = dataUrl;
-      try {
-        const blob = await (await fetch(dataUrl)).blob();
-        src = URL.createObjectURL(blob);
-      } catch (e) {
-        console.warn("[保存] dataURL→blob 转换失败，使用 dataURL：", e);
-      }
-      finishSaveImg.src = src;
-      finishDownloadLink.href = src;
+      // 直接用 dataURL 作为 <img> src（微信长按存图对 dataURL 比 blob: 链接更友好，
+      // blob: 链接在安卓微信里基本无法长按保存）。
+      finishSaveImg.src = dataUrl;
+      finishDownloadLink.href = dataUrl;
       finishDownloadLink.setAttribute(
         "download",
         `家族树全家福_${new Date().getTime()}.png`

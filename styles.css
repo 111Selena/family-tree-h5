@@ -482,8 +482,11 @@ body {
   max-height: 42vh;
   width: auto;
   height: auto;
-  -webkit-user-drag: none;
-  user-select: none;
+  /* 关键：允许微信/移动端长按弹出"保存图片"菜单（之前被 user-select:none 禁掉了） */
+  -webkit-touch-callout: default;
+  -webkit-user-select: auto;
+  user-select: auto;
+  -webkit-user-drag: auto;
 }
 
 .finish-save__tip {
