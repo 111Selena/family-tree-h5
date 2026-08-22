@@ -30,7 +30,7 @@
   //    正式商用请改用后端代理转发，不要把密钥放前端。
   const AI_CONFIG = {
     enabled: true,    // true = 走 AI 生成插画合影；false = 直接用原图
-    apiKey: "ark-22ba6272-e36d-44d9-8bf1-81e23855d132-03b7c",
+    apiKey: "ark-1c5795f2-8e6c-471f-a1bc-b7ff2944d498-c3317",
     model: "doubao-seedream-4-5-251128",  // Seedream 4.5
     baseUrl: "https://ark.cn-beijing.volces.com/api/v3",
     // size 不再固定，由 computeSeedreamSize() 根据原图比例动态计算，保持原始宽高比
