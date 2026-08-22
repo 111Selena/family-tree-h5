@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>家族树 - 每片叶子都是家人的模样</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app" class="app">
+    <!-- 首页标题 -->
+    <div id="hero-title" class="hero-title">
+      <h1 class="hero-title__main">家庭树全家福</h1>
+      <p class="hero-title__sub">私纪录片《童童》衍生互动</p>
+    </div>
+
+    <!-- 飘落叶子容器 -->
+    <div id="falling-leaves" class="falling-leaves"></div>
+
+    <!-- 大树背景层 -->
+    <div id="tree-bg" class="tree-bg"></div>
+
+    <!-- 透明交互层：相框将渲染在这里 -->
+    <div id="interaction-layer" class="interaction-layer"></div>
+
+    <!-- 底部操作按钮 -->
+    <div id="upload-bar" class="upload-bar">
+      <input
+        id="camera-input"
+        type="file"
+        accept="image/*"
+        capture="environment"
+        class="photo-input"
+      />
+      <label for="camera-input" class="upload-btn upload-btn--primary">
+        <span class="upload-btn__icon">📷</span>
+        <span class="upload-btn__text">拍一张全家福</span>
+      </label>
+      <input
+        id="gallery-input"
+        type="file"
+        accept="image/*"
+        class="photo-input"
+      />
+      <label for="gallery-input" class="upload-btn upload-btn--secondary">
+        <span class="upload-btn__icon">🖼️</span>
+        <span class="upload-btn__text">从相册上传</span>
+      </label>
+    </div>
+
+    <!-- 叶子加载过渡页 -->
+    <div id="transition-overlay" class="transition-overlay" aria-hidden="true">
+      <h2 class="transition-title">家庭树全家福</h2>
+      <div class="leaf-loader">
+        <img src="leaves/transition-leaf.png" alt="叶子" class="leaf-loader__img" />
+      </div>
+      <p id="transition-text" class="transition-text">正在识别家人…</p>
+      <div id="transition-progress" class="transition-progress" aria-hidden="true">
+        <div class="transition-progress__track">
+          <div id="transition-progress-bar" class="transition-progress__bar"></div>
+        </div>
+        <p id="transition-progress-text" class="transition-progress__text"></p>
+      </div>
+    </div>
+
+    <!-- 展示完成后的保存弹窗 -->
+    <div id="finish-modal" class="modal" aria-hidden="true">
+      <div class="modal__sheet modal__sheet--warm">
+        <!-- 状态一：操作按钮 -->
+        <div id="finish-panel-actions">
+          <p class="finish-quote">“全家福已挂上枝头”</p>
+          <div class="finish-actions">
+            <button id="save-btn" class="modal__primary-btn" type="button">保存此画面</button>
+            <button id="replay-btn" class="modal__secondary-btn" type="button">再玩一次</button>
+          </div>
+        </div>
+        <!-- 状态二：长按保存 -->
+        <div id="finish-panel-save" class="finish-save" hidden>
+          <div class="finish-save__imgwrap">
+            <img id="finish-save-img" alt="长按图片保存到相册" />
+          </div>
+          <p class="finish-save__tip">👆 长按上方图片，选择“保存图片”</p>
+          <div class="finish-actions">
+            <a id="finish-download-link" class="modal__primary-btn finish-download-btn" href="javascript:void(0)" download>下载图片</a>
+            <button id="finish-back-btn" class="modal__secondary-btn" type="button">返回</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 隐藏的合成画布（用于保存） -->
+    <canvas id="compose-canvas" class="compose-canvas"></canvas>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
