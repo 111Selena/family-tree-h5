@@ -94,6 +94,7 @@
   const finishSaveImg = document.getElementById("finish-save-img");
   const finishDownloadLink = document.getElementById("finish-download-link");
   const finishBackBtn = document.getElementById("finish-back-btn");
+  const savePhotoOnlyBtn = document.getElementById("save-photo-only-btn");
   const composeCanvas = document.getElementById("compose-canvas");
 
   // ===== 状态 =====
@@ -118,6 +119,7 @@
     galleryInput.addEventListener("change", handlePhotoUpload);
 
     saveBtn.addEventListener("click", saveScreen);
+    savePhotoOnlyBtn.addEventListener("click", savePhotoOnly);
     replayBtn.addEventListener("click", resetApp);
     finishBackBtn.addEventListener("click", () => showFinishPanel("actions"));
 
@@ -640,6 +642,24 @@
     } finally {
       state.isProcessing = false;
     }
+  }
+
+  // ===== 仅保存 AI 生成的插画合影（不含大树整页） =====
+  // 直接复用 state.illustration（那张插画 dataURL），不走合成画布，
+  // 复用同一个「长按保存」面板。
+  function savePhotoOnly() {
+    if (state.isProcessing) return;
+    if (!state.illustration) {
+      alert("还没有生成插画，请先上传照片～");
+      return;
+    }
+    finishSaveImg.src = state.illustration;
+    finishDownloadLink.href = state.illustration;
+    finishDownloadLink.setAttribute(
+      "download",
+      `家族树全家福_${new Date().getTime()}.png`
+    );
+    showFinishPanel("save");
   }
 
   async function composeFinalImage() {
